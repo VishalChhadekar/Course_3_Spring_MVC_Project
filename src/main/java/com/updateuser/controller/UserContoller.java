@@ -2,6 +2,8 @@ package com.updateuser.controller;
 
 import java.util.Objects;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +35,9 @@ public class UserContoller {
 	// add new user
 	@RequestMapping(value = "/adduserdata", method = RequestMethod.POST)
 	public String addNewUser(@ModelAttribute User user, BindingResult result) throws Exception {
+		if (user.getUserPhone() == null) {
+			throw new InvalidUserData("Invalid User Data. All fields are required");
+		}
 		if (result.hasErrors()) {
 			throw new InvalidUserData("Invalid User Data. All fields are required");
 		}

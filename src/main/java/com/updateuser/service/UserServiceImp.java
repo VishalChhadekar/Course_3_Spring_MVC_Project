@@ -26,6 +26,9 @@ public class UserServiceImp implements UserService {
 
 	public void updateUser(User user) {
 		// get userById
+		if (user.getId() == null) {
+			throw new NullPointerException("User Id is required");
+		}
 		User getUser = userRepository.getUserById(user.getId());
 
 		// If user object is not empty or data is not same: then only update it,
@@ -42,7 +45,6 @@ public class UserServiceImp implements UserService {
 		if (Objects.nonNull(user.getUserPhone()) && !"".equals(String.valueOf(user.getUserPhone()))) {
 			getUser.setUserPhone(user.getUserPhone());
 		}
-
 		// save updated user
 		userRepository.updateUser(getUser);
 
